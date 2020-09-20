@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="g:\毕业设计\JQ插件\jqueryxyskj\img\bitbug_favicon.ico" type="image/x-icon" />
+<title>图像识别</title>
+<link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../css/heightlength.css">
+<link rel="stylesheet" href="../css/mxjs.css">
+<style type="text/css">
+  table {
+    border: 1px solid white;
+    width: 600px;
+    height: 280px;
+    margin: 20px auto;
+    text-align: center;
+    color: black;
+  }
+  table tr td img{
+    width: 85px;
+    height: 85px;
+    /*background: black;*/
+  }
+  tr, td{
+    border: 1px solid black;
+
+  }
+  .zhuangtai {
+  width:50%;
+  margin:0 auto;
+  background:#fff;
+  display:flex;
+  justify-content:space-between;
+  padding:10px 16px;
+  box-sizing:border-box;
+  align-items:center;
+}
+.zhuangtai>b {
+  font-size:16px;
+}
+.zhuangtai .xianshi {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.zhuangtai .xianshi>i {
+  font-size:14px;
+  color:red;
+  font-style:normal;
+  margin-right:10px;
+}
+.zhuangtai .xianshi>span {
+  display:inline-block;
+  width:44px;
+  height:22px;
+  background:#ccc;
+  border-radius:12px;
+  padding:1px;
+  box-sizing:border-box;
+  position:relative;
+  transition:0.5s;
+}
+.zhuangtai .xianshi>span>.btn_u {
+  display:inline-block;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:#fff;
+  position:absolute;
+  left:0px;
+  transition:0.5s;
+  transform:translateX(-2px);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="jsbg">
+    <div class="col-lg-12 mxlength">
+      <div class="mx-1"> 
+			<h2>图像识别</h2>
+			<p>图像识别技术是人工智能的一个重要领域。它是指对图像进行对象识别，以识别各种不同模式的目标和对像的技术。本系统使用图像识别，将摄像头拍摄到的图片与数据库内的图片进行对比，发现有垃圾存在，则启动清理机器人。</p>
+	  </div>
+    </div>
+    <div class="col-lg-12">
+          <table>
+            <tr>
+              <td>拍摄照片</td>
+              <td>对比照片</td>
+              <td>启动时间</td>
+            </tr>
+            <tr>
+              <td><img  id="obj" src="imges/timg.gif"></td>
+              <td><img id="obj2" src="imges/timg.gif"></td>
+              <td><div id="nowtime"></div></td>
+            </tr>
+            <tr >
+              <td colspan="3" id="span1">启动次数：0次</td>
+<!--               <td></td>
+              <td></td> -->
+            </tr>
+          </table>
+      <div class="zhuangtai" >
+    <b>打扫机器人状态</b>
+    <div class="xianshi" >
+          <span class="btn_onoff" id="btn">
+
+    <u class="btn_u"></u>
+
+            </span><i>启动</i>
+    </div>
+</div>
+    </div>
+  </div>	
+</div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> 
+<script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script> 
+<script src="../js/smoothscroll.js"></script>
+<script src="../js/mking.js"></script>
+<script type="text/javascript">
+
+                      //页面加载调用
+            window.onload=function(){
+                //每10秒刷新时间
+              setInterval("NowTime()",10000);
+            }
+            function NowTime(){
+                var myDate=new Date();
+                var y = myDate.getFullYear();
+                var M = myDate.getMonth()+1;     //获取当前月份(0-11,0代表1月)
+                var d = myDate.getDate();        //获取当前日(1-31)
+                var h = myDate.getHours();       //获取当前小时数(0-23)
+                var m = myDate.getMinutes();     //获取当前分钟数(0-59)
+                var s = myDate.getSeconds();     //获取当前秒数(0-59)
+                //检查是否小于10
+                M=check(M);
+                d=check(d);
+                h=check(h);
+                m=check(m);
+                s=check(s);
+                var timestr = y+"-"+M+"-"+d+" "+h+":"+m+":"+s;
+                document.getElementById("nowtime").innerHTML="时间：" + timestr;
+            }
+            //时间数字小于10，则在之前加个“0”补位。
+            function check(i){
+                var num = (i<10)?("0"+i) : i;
+                return num;
+            }
+
+
+
+
+var onoff = 1;
+var timeInterva2=20000;
+var oDiv = document.getElementById('btn');   //获取元素div
+setInterval(function() {
+    oDiv.onclick = function(){   //给元素增加点击事件 
+        console.log(onoff)
+    if (onoff === 1) {
+        $(".btn_onoff .btn_u").css("transform", "translateX(22px)");
+        $(".btn_onoff").css("background", "#27ae60");
+        onoff = 2;
+        
+    }
+     else if (onoff === 2) {
+        $(".btn_onoff .btn_u").css("transform", "translateX(2px)");
+        $(".btn_onoff").css("background", "#ccc");
+        onoff = 1;
+       
+    }
+ 
+}
+oDiv.click();  //执行点击事件，这样就模拟出了自动执行点击事
+
+  // 你要执行的任务
+
+}, timeInterva2)
+
+
+
+
+
+
+
+
+
+
+
+var curIndex=0;
+ //时间间隔 单位毫秒
+ var timeInterval=10000;
+ var arr=new Array();
+ var arr2=new Array();
+arr[0]="imges/数字1.png";
+arr[1]="imges/辣鸡消失.png";
+arr[2]="imges/存在辣鸡照片.jpg";
+arr[3]="imges/有辣鸡1.jpg";
+arr[4]="imges/无辣鸡1.jpg";
+arr[5]="imges/辣鸡消失.png";
+
+
+arr2[0]="imges/数字6.png";
+arr2[1]="imges/辣鸡消失.png";
+arr2[2]="imges/辣鸡消失.png";
+arr2[3]="imges/无辣鸡1.jpg";
+arr2[4]="imges/无辣鸡1.jpg";
+arr2[5]="imges/辣鸡消失.png";
+
+   var obj=document.getElementById("obj");
+    var obj2=document.getElementById("obj2");
+          var cishu = 0;
+          var t = setInterval(function(){
+          if (curIndex==0 || curIndex==3 || curIndex==4) {
+            cishu = cishu;
+
+          }   
+          else {
+            cishu++;                              
+                             }                   
+           
+           var span1 = document.getElementById("span1").innerHTML="启动次数：" +cishu+"次";
+           span1.innerText = cishu;     
+          },10000);
+
+setInterval(changeImg,timeInterval);
+function changeImg()
+{
+
+    if (curIndex==arr.length-1) 
+    {
+       curIndex=0;
+   }
+    else
+    {
+        curIndex+=1;
+    }
+    obj.src=arr[curIndex];
+    obj2.src=arr2[curIndex];
+
+  }
+
+
+
+
+
+
+</script>
+</body>
+</html>
